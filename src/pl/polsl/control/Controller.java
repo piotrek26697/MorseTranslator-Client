@@ -6,12 +6,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import pl.polsl.connection.TCPClient;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * Class object controls flow of data between Model and View
+ *
  * @author Piotr Musioł
  * @version 1.0
  */
@@ -39,9 +42,12 @@ public class Controller implements Initializable
     @FXML
     private Label outputText;
 
+    private TCPClient client;
+
     /**
      * Referencing buttons to the handler method
-     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
@@ -49,40 +55,37 @@ public class Controller implements Initializable
     {
         codeBtn.setOnAction(this::translateToMorse);
         decodeBtn.setOnAction(this::translateToPolish);
+
+        try
+        {
+            client = new TCPClient();
+        } catch (IOException e)
+        {
+            System.err.println(e.getMessage());
+            outputText.setText("No Connection");
+        }
     }
 
     /**
      * Coding button handler
+     *
      * @param event An Event representing some type of action.
      */
     private void translateToMorse(ActionEvent event)
     {
-        /*String output;
-        try
-        {
-            output = coder.code(inputText.getText());
-        } catch (DictionaryException e)
-        {
-            output = e.getMessage();
-        }
-        this.outputText.setText("Wynik translacji: " + output);*/
+        client.sendText(inputText.getText(), 1);
+        outputText.setText(client.getText());
     }
 
     /**
-     *Decoding button handler
+     * Decoding button handler
+     *
      * @param event An Event representing some type of action.
      */
     private void translateToPolish(ActionEvent event)
     {
-        /*String output;
-        try
-        {
-            output = decoder.decode(inputText.getText());
-        } catch (DictionaryException e)
-        {
-            output = e.getMessage();
-        }
-        this.outputText.setText("Wynik translacji: " + output);*/
+        client.sendText(inputText.getText(), 2);
+        outputText.setText(client.getText());
     }
 }
 
