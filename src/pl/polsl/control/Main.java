@@ -1,4 +1,4 @@
-package control;
+package pl.polsl.control;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +23,7 @@ public class Main extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/View.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/pl/polsl/view/View.fxml"));
         primaryStage.setTitle("Morse Translator");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
