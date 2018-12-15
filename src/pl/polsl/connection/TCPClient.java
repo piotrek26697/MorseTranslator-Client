@@ -6,13 +6,40 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
+/**
+ * Class object is responsible for connection to the server
+ *
+ * @author Piotr Musioł
+ * @version 1.0
+ */
+
 public class TCPClient implements Closeable
 {
+    /**
+     * server's IP address
+     */
     private InetAddress serverAddress;
+
+    /**
+     * server's port
+     */
     private int serverPort;
+
+    /**
+     * client's socket
+     */
     private Socket socket;
+
+    /**
+     * buffer from which data is being read
+     */
     private BufferedReader input;
+
+    /**
+     * buffer to send data
+     */
     private PrintWriter output;
+
 
     public TCPClient() throws IOException
     {
@@ -32,6 +59,11 @@ public class TCPClient implements Closeable
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
+    /**
+     * Method used to send data to server
+     * @param text text to code or decode
+     * @param choice choice between coding and decoding
+     */
     public void sendText(String text, int choice)
     {
         switch (choice)
@@ -45,6 +77,10 @@ public class TCPClient implements Closeable
         }
     }
 
+    /**
+     * Method used to get processed data from server
+     * @return translated data
+     */
     public String getText()
     {
         String temp = "";
@@ -58,6 +94,10 @@ public class TCPClient implements Closeable
         return temp;
     }
 
+    /**
+     * Closing stream and releasing any system resources
+     * @throws IOException if an I/O error occur
+     */
     @Override
     public void close() throws IOException
     {

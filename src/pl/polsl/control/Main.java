@@ -10,10 +10,10 @@ import pl.polsl.connection.TCPClient;
 import java.io.IOException;
 
 /**
- * Morse Translator
+ * Morse Translator - Client application
  *
  * @author Piotr Musioł
- * @version 1.0
+ * @version 2.0
  */
 
 public class Main extends Application

@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import pl.polsl.connection.TCPClient;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +15,7 @@ import java.util.ResourceBundle;
  * Class object controls flow of data between Model and View
  *
  * @author Piotr Musioł
- * @version 1.0
+ * @version 2.0
  */
 
 public class Controller implements Initializable
@@ -42,6 +41,9 @@ public class Controller implements Initializable
     @FXML
     private Label outputText;
 
+    /**
+     * object responsible for communication with server
+     */
     private TCPClient client;
 
     /**
