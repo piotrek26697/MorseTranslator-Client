@@ -61,7 +61,8 @@ public class TCPClient implements Closeable
 
     /**
      * Method used to send data to server
-     * @param text text to code or decode
+     *
+     * @param text   text to code or decode
      * @param choice choice between coding and decoding
      */
     public void sendText(String text, int choice)
@@ -79,6 +80,7 @@ public class TCPClient implements Closeable
 
     /**
      * Method used to get processed data from server
+     *
      * @return translated data
      */
     public String getText()
@@ -96,6 +98,7 @@ public class TCPClient implements Closeable
 
     /**
      * Closing stream and releasing any system resources
+     *
      * @throws IOException if an I/O error occur
      */
     @Override
