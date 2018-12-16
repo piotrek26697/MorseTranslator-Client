@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import pl.polsl.connection.TCPClient;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class Main extends Application
         Parent root = FXMLLoader.load(getClass().getResource("/pl/polsl/view/View.fxml"));
         primaryStage.setTitle("Morse Translator");
         primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
     }
 

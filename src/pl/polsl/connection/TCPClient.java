@@ -75,6 +75,9 @@ public class TCPClient implements Closeable
             case 2:
                 output.println("d " + text);
                 break;
+            case 3:
+                output.println("q");
+                break;
         }
     }
 
@@ -116,6 +119,8 @@ public class TCPClient implements Closeable
             System.err.println(e.getMessage());
         }
 
+        input.close();
+        output.close();
         if (socket != null)
             socket.close();
     }

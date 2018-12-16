@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import pl.polsl.connection.TCPClient;
 
 import java.io.IOException;
@@ -31,6 +32,12 @@ public class Controller implements Initializable
      * button used for coding message into Morse code
      */
     private Button codeBtn;
+
+    /**
+     * closing button
+     */
+    @FXML
+    private Button closeButton;
     /**
      * button used for decoding message into Polish
      */
@@ -48,6 +55,11 @@ public class Controller implements Initializable
     private TCPClient client;
 
     /**
+     * blocks communication with server if there's no connection
+     */
+    private boolean connection = true;
+
+    /**
      * Referencing buttons to the handler method
      *
      * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
@@ -58,6 +70,7 @@ public class Controller implements Initializable
     {
         codeBtn.setOnAction(this::translateToMorse);
         decodeBtn.setOnAction(this::translateToPolish);
+        closeButton.setOnAction(this::exitProgram);
 
         try
         {
@@ -66,8 +79,33 @@ public class Controller implements Initializable
         {
             System.err.println(e.getMessage());
             outputText.setText("No Connection");
+            connection = false;
         }
     }
+
+    /**
+     * Exit button handler
+     *
+     * @param event An Event representing some type of action
+     */
+    private void exitProgram(ActionEvent event)
+    {
+        if (connection)
+        {
+            client.sendText(null, 3);
+            try
+            {
+                client.close();
+            } catch (IOException e)
+            {
+                System.err.println(e.getMessage());
+            }
+        }
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+        System.exit(0);
+    }
+
 
     /**
      * Coding button handler
@@ -76,8 +114,11 @@ public class Controller implements Initializable
      */
     private void translateToMorse(ActionEvent event)
     {
-        client.sendText(inputText.getText(), 1);
-        outputText.setText(client.getText());
+        if (connection)
+        {
+            client.sendText(inputText.getText(), 1);
+            outputText.setText(client.getText());
+        }
     }
 
     /**
@@ -87,8 +128,11 @@ public class Controller implements Initializable
      */
     private void translateToPolish(ActionEvent event)
     {
-        client.sendText(inputText.getText(), 2);
-        outputText.setText(client.getText());
+        if (connection)
+        {
+            client.sendText(inputText.getText(), 2);
+            outputText.setText(client.getText());
+        }
     }
 }
 
